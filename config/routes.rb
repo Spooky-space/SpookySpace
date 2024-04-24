@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :forums
+  resources :list_adds
   devise_for :users,
     path: '',
     path_names: {
