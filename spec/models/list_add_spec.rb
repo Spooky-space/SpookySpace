@@ -10,58 +10,67 @@ RSpec.describe ListAdd, type: :model do
   }
 
   it 'is valid with valid attributes' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       tmdb_api_id: 123,
       watched: true,
       rating: 4
     )
-    expect(listadd).to be_valid
+    expect(list_add).to be_valid
+  end
+
+  it 'is valid with valid false watched attribute' do
+    list_add = user.list_adds.create(
+      tmdb_api_id: 123,
+      watched: false,
+      rating: 4
+    )
+    expect(list_add).to be_valid
   end
 
   it 'is not valid without a tmdb_api_id' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       watched: true,
       rating: 4
     )
-    expect(listadd).not_to be_valid
-    expect(listadd.errors[:tmdb_api_id].first).to eq("can't be blank")
+    expect(list_add).not_to be_valid
+    expect(list_add.errors[:tmdb_api_id].first).to eq("can't be blank")
   end
 
   it 'is not valid without a watched' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       tmdb_api_id: 123,
       rating: 4
     )
-    expect(listadd).not_to be_valid
-    expect(listadd.errors[:watched].first).to eq("can't be blank")
+    expect(list_add).not_to be_valid
+    expect(list_add.errors[:watched].first).to eq("is not included in the list")
   end
 
   it 'is not valid without a rating' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       tmdb_api_id: 123,
       watched: true,
     )
-    expect(listadd).not_to be_valid
-    expect(listadd.errors[:rating].first).to eq("can't be blank")
+    expect(list_add).not_to be_valid
+    expect(list_add.errors[:rating].first).to eq("can't be blank")
   end
 
   it 'is not valid with an invalid rating' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       tmdb_api_id: 123,
       watched: true,
       rating: 6
     )
-    expect(listadd).not_to be_valid
-    expect(listadd.errors[:rating].first).to eq('is not included in the list')
+    expect(list_add).not_to be_valid
+    expect(list_add.errors[:rating].first).to eq('is not included in the list')
   end
 
   it 'is not valid without a watched status' do
-    listadd = user.list_adds.create(
+    list_add = user.list_adds.create(
       tmdb_api_id: 123,
       rating: 3,
       watched: nil
     )
-    expect(listadd).not_to be_valid
-    expect(listadd.errors[:watched].first).to eq("can't be blank")
+    expect(list_add).not_to be_valid
+    expect(list_add.errors[:watched].first).to eq("is not included in the list")
   end
 end
