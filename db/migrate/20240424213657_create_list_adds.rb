@@ -4,7 +4,6 @@ class CreateListAdds < ActiveRecord::Migration[7.1]
       t.integer :tmdb_api_id
       t.boolean :watched
       t.integer :rating
-      t.bigint :user_id
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
