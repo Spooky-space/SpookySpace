@@ -1,36 +1,36 @@
 class ListAddsController < ApplicationController
 
   def index
-    listadds = ListAdd.all
-    render json: listadds
+    list_adds = ListAdd.all
+    render json: list_adds
   end
 
   def create
-    listadd = ListAdd.create(listadd_params)
-    if listadd.valid?
-      render json: listadd
+    list_add = ListAdd.create(list_add_params)
+    if list_add.valid?
+      render json: list_add
     else
-      render json: listadd.errors, status: 422
+      render json: list_add.errors, status: 422
     end
   end
 
   def update
-    listadd = ListAdd.find(params[:id])
-    listadd.update(listadd_params)
-    if listadd.valid?
-      render json: listadd
+    list_add = ListAdd.find(params[:id])
+    list_add.update(list_add_params)
+    if list_add.valid?
+      render json: list_add
     else
-      render json: listadd.errors, status: 422
+      render json: list_add.errors, status: 422
     end
   end
 
   def destroy
-    listadd = ListAdd.find(params[:id])
-    listadd.destroy
+    list_add = ListAdd.find(params[:id])
+    list_add.destroy
   end
 
   private
-  def listadd_params
+  def list_add_params
     params.require(:list_add).permit(:tmdb_api_id, :watched, :rating, :user_id)
   end
 end

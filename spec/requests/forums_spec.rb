@@ -112,4 +112,19 @@ RSpec.describe "Forum", type: :request do
     expect(response).to have_http_status(204)
     end
   end
+
+  describe '422 error' do
+    it 'creates a invalid comment' do
+      post forums_path, params: {
+        forum: {
+          comment: nil,
+          username: nil,
+          user_id: nil
+        }
+      }
+      comment = Forum.where(tmdb_api_id: nil).first
+      expect(response).to have_http_status(422)
+      expect(comment).to eq(nil)
+    end
+  end
 end

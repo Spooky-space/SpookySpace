@@ -98,4 +98,35 @@ RSpec.describe "list_adds", type: :request do
       expect(list_add).to eq(nil)
     end
   end
+
+  describe 'DELETE #destroy' do
+    it 'deletes an comment' do
+      list_add = user.list_adds.create(
+          tmdb_api_id: 1234,
+          rating: 0,
+          watched: false,
+          user_id: user.id
+      )
+      expect {
+        delete list_add_path(list_add)
+    }.to change(ListAdd, :count).by(-1)
+    expect(response).to have_http_status(204)
+    end
+  end
+
+  describe '422 error' do
+    it 'creates a invalid list_add' do
+      post list_adds_path, params: {
+        list_add: {
+          tmdb_api_id: nil,
+          rating: nil,
+          watched: nil,
+          user_id: nil
+        }
+      }
+      list_add = ListAdd.where(tmdb_api_id: nil).first
+      expect(response).to have_http_status(422)
+      expect(list_add).to eq(nil)
+    end
+  end
 end
