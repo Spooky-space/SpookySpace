@@ -57,7 +57,7 @@ user2 = User.where(email: "test2@example.com").first_or_create(username:"User2",
     }
   ]
   user_1_forum.each do |comment|
-  user1.comments.create(comment)
+  user1.forums.create(comment)
   puts "Creating: #{comment}"
   end
 
@@ -116,6 +116,6 @@ user2 = User.where(email: "test2@example.com").first_or_create(username:"User2",
     }
   ]
   user_2_forum.each do |comment|
-  user2.comments.create(comment)
+  user2.forums.create(comment)
   puts "Creating: #{comment}"
   end
