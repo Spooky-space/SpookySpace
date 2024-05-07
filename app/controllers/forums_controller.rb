@@ -4,6 +4,16 @@ class ForumsController < ApplicationController
     render json: comments
   end
 
+  def show
+    movie_api_id = Forum.where(tmdb_api_id: params[:id])
+    # p movie_api_id.is_a?(Array)
+    # if movie_api_id.is_a?(Array)
+      render json: movie_api_id
+    # else
+    #   render json: movie_api_id.errors, status: 422
+    # end
+  end
+
   def create
     comment = Forum.create(forum_params)
     if comment.valid?
